@@ -1,5 +1,6 @@
 package com.example.suprisequizapplication.adapter
 
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.RecyclerView
@@ -22,7 +24,9 @@ class QuestionAdapter(
     private val onCopyQuestion: (Int,Question) -> Unit,
     private val onAddQuestion: () -> Unit,
     private val onOptionAddButtonClicked: (Int) -> Unit,
-    private val onAnswerKeySelected: (Int, Int) -> Unit
+    private val onAnswerKeySelected: (Int, Int) -> Unit,
+    private val onSetAnswerKeyClicked: (Int) -> Unit,
+
 ) : RecyclerView.Adapter<QuestionAdapter.QuestionViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -39,6 +43,10 @@ class QuestionAdapter(
         holder.uiEtQuestion.hint = "Question $questionPositionIndex"
         Log.d("QuestionAdapter", "onBindViewHolder: ${questionList}")
         holder.uiEtQuestion.setText(question.text)
+        val editTextValue = question.text
+        val bundle = Bundle()
+        bundle.putString("edit_text_value", editTextValue)
+        holder.uiRvOptions.itemAnimator
         if (question.options?.isNotEmpty() == true) {
             holder.uiRvOptions.apply {
                 adapter = OptionsAdapter(
@@ -54,6 +62,7 @@ class QuestionAdapter(
                     onAnswerKeySelected = {radioBtnPosition ->
                         onAnswerKeySelected(position,radioBtnPosition)
                         notifyItemChanged(position)
+                        //notifyDataSetChanged()
                     }
                 )
             }
@@ -63,6 +72,7 @@ class QuestionAdapter(
             onQuestionTextEntered(position, questionText.toString())
             //notifyDataSetChanged()
         }
+
     }
 
     override fun getItemCount(): Int {
@@ -84,6 +94,7 @@ class QuestionAdapter(
         private val uiIvAddQuestion: ImageView = itemView.findViewById(R.id.uiIvAddQuestion)
         private val uiIvCopyQuestion: ImageView = itemView.findViewById(R.id.uiIvCopyQuestion)
         private val uiIvDeleteQuestion: ImageView = itemView.findViewById(R.id.uiIvDeleteQuestion)
+        private val uiTvSetAnswerKey: TextView = itemView.findViewById(R.id.uiTvSetAnswerKey)
 
         init {
             uiIvAddQuestion.setOnClickListener {
@@ -100,6 +111,10 @@ class QuestionAdapter(
             }
             uiBtnAddOption.setOnClickListener {
                 onOptionAddButtonClicked(adapterPosition)
+                notifyDataSetChanged()
+            }
+            uiTvSetAnswerKey.setOnClickListener {
+                onSetAnswerKeyClicked(adapterPosition)
                 notifyDataSetChanged()
             }
         }

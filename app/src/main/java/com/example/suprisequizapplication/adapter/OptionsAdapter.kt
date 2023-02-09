@@ -29,10 +29,9 @@ class OptionsAdapter(
 
     override fun onBindViewHolder(holder: OptionsViewHolder, position: Int) {
         val option = optionsList[position]
-        val optionPositionIndex = position+1
-        holder.uiEtOption.hint = "Option $optionPositionIndex "
+        holder.uiEtOption.hint = "Option ${position+1} "
         holder.uiEtOption.setText(option.optionText)
-        holder.uiRbOptions.isChecked = option.setAnswer
+        holder.uiRbOptions.isChecked = option.setAnswer == true
         holder.uiEtOption.doAfterTextChanged { optionText ->
             option.optionText = optionText.toString()
             onOptionTextEntered(position, optionText.toString())
@@ -50,13 +49,12 @@ class OptionsAdapter(
         private val uiIvDeleteOption: ImageView = itemView.findViewById(R.id.uiIvDeleteOption)
 
         init {
-
             uiIvDeleteOption.setOnClickListener {
                 onOptionDeleted(adapterPosition)
                 notifyDataSetChanged()
             }
             uiRbOptions.setOnClickListener {
-                onAnswerKeySelected(adapterPosition)//, optionsList[adapterPosition].optionText ?: "")
+                onAnswerKeySelected(adapterPosition)
                 notifyDataSetChanged()
             }
         }

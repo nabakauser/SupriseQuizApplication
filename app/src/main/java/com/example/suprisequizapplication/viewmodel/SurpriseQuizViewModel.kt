@@ -69,7 +69,7 @@ class SurpriseQuizViewModel(
         val question = questionList[questionPosition]
         val option = Options(optionText = "", setAnswer = false)
         question.options?.add(option)
-        questionsLD.value = questionList
+        //questionsLD.value = questionList
 
     }
 
@@ -81,20 +81,25 @@ class SurpriseQuizViewModel(
         questionsLD.value = questionList
     }
 
-//    fun onAnswerKeySelected(questionPosition: Int, radioBtnPosition: Int) {
-//        val question = questionList[questionPosition]
-//        val radioButton = question.radioButtons?.get(radioBtnPosition)
-//        radioButton?.isSelected = true
-//    }
-
     fun onAnswerKeySelected(questionPosition: Int, radioBtnPosition: Int) {
         Log.e("questionPosition","questionPosition:$questionPosition")
         Log.e("radioBtnPosition","radioBtnPosition:$radioBtnPosition")
-            questionList[questionPosition].options?.forEachIndexed { optionIndex, options ->
+        val question = questionList[questionPosition]
+            question.options?.forEachIndexed { optionIndex, options ->
             options.setAnswer = false
             if (optionIndex == radioBtnPosition)
                 options.setAnswer = true
         }
-       // questionsLD.value = questionList
+        questionsLD.value = questionList
+    }
+
+    fun onRadioButtonSelected(questionPosition: Int, radioBtnPosition: Int) {
+        Log.e("questionPosition","questionPosition:$questionPosition")
+        Log.e("radioBtnPosition","radioBtnPosition:$radioBtnPosition")
+        val question = questionList[questionPosition]
+        question.options?.forEach { options ->
+            options.setAnswer = false
+        }
+        questionsLD.value = questionList
     }
 }
