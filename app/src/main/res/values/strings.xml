@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">SurpriseQuizApplication</string>
+    <string name="uiTvAppBarTitle"><b>Surprise Quiz</b></string>
+</resources>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RadioGroup
+        android:id="@+id/uiRadioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/uiRbOption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </RadioGroup>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/uiEtOptions"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:hint="Enter Option"
+        app:layout_constraintBottom_toBottomOf="@id/uiRadioGroup"
+        app:layout_constraintEnd_toStartOf="@id/uiIvDeleteOption"
+        app:layout_constraintStart_toEndOf="@id/uiRadioGroup"
+        app:layout_constraintTop_toTopOf="@id/uiRadioGroup" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/uiIvDeleteOption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:src="@drawable/ic_delete_option"
+        app:layout_constraintBottom_toBottomOf="@id/uiEtOptions"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/uiEtOptions" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
