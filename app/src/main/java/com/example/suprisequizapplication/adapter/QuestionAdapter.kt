@@ -1,6 +1,5 @@
 package com.example.suprisequizapplication.adapter
 
-import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.core.widget.addTextChangedListener
-import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.RecyclerView
 import com.example.suprisequizapplication.R
 import com.example.suprisequizapplication.model.Question
@@ -44,17 +42,20 @@ class QuestionAdapter(
 
     override fun onBindViewHolder(holder: QuestionViewHolder, position: Int) {
         val question = questionList[position]
-        val questionPositionIndex = position + 1
-        holder.uiEtQuestion.hint = "Question $questionPositionIndex"
-        Log.d("QuestionAdapter", "onBindViewHolder: ${questionList}")
+        holder.uiEtQuestion.hint = "Question ${position+1}"
+        holder.uiEtQuestion.setText(question.text)
+        Log.d("QuestionAdapter", "onBindViewHolder: $questionList")
 
         if (question.options?.isNotEmpty() == true) {
             holder.uiRvOptions.apply {
                 adapter = OptionsAdapter(
                     optionsList = question.options ?: listOf(),
                     onOptionTextEntered = { optionPosition, optionText ->
-                        onOptionTextEntered(position, optionPosition, optionText)
-                        //notifyDataSetChanged()
+                        onOptionTextEntered(position,
+                            optionPosition,
+                            optionText)
+                        //notifyDataSetChanged() -> error: page refreshes on every new letter typed
+                        // so cursor shifts it position from question editText to title editText
                     },
                     onOptionDeleted = { optionPosition ->
                         onOptionDeleted(position, optionPosition)
@@ -86,13 +87,13 @@ class QuestionAdapter(
         return questionList.size
     }
 
-    fun addSurpriseQuiz(list: List<Question>) {
-        list.let {
-            questionList.clear()
-            this.questionList.addAll(it)
-            notifyDataSetChanged()
-        }
-    }
+//    fun addSurpriseQuiz(list: List<Question>) {
+//        list.let {
+//            questionList.clear()
+//            this.questionList.addAll(it)
+//            notifyDataSetChanged()
+//        }
+//    }
 
     inner class QuestionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val uiEtQuestion: EditText = itemView.findViewById(R.id.uiEtQuestion)

@@ -10,4 +10,8 @@
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
     <string name="enter_question">Enter Question</string>
+    <string name="choose_an_option">Choose an Option</string>
+    <string name="get_image_from_gallery">Get Image From Gallery</string>
+    <string name="get_image_from_camera">Get Image From Camera</string>
+    <string name="add_option">+ Add Option</string>
 </resources>

@@ -19,7 +19,9 @@ class AnswerKeyAdapter(
     ): AnswerKeyViewHolder {
         val view =
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.answerkey_option_layout, parent, false)
+                .inflate(R.layout.answerkey_option_layout,
+                    parent,
+                    false)
         return AnswerKeyViewHolder(view)
     }
 

@@ -130,7 +130,7 @@ class QuizActivity : AppCompatActivity() {
                                 Toast.makeText(this, "Please set all options", Toast.LENGTH_SHORT).show()
                             }
                             else {
-                                showAnswerKeyBottomSheet(position)
+                                setAnswerKeyBottomSheet(position)
                             }
                         }else{
                             Toast.makeText(this,"A minimum of 2 options are required",Toast.LENGTH_SHORT).show()
@@ -164,8 +164,8 @@ class QuizActivity : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("SetTextI18n")
-    private fun showAnswerKeyBottomSheet(position: Int) {
+    @SuppressLint("SetTextI18n", "InflateParams")
+    private fun setAnswerKeyBottomSheet(position: Int) {
         val answerKeyBottomSheet = BottomSheetDialog(this)
         val view = layoutInflater.inflate(R.layout.set_answer_key_layout, null)
         val uiIvCloseButton = view.findViewById<ImageView>(R.id.uiIvCloseBottomTab)
@@ -173,6 +173,7 @@ class QuizActivity : AppCompatActivity() {
 
         val question = surpriseQuizViewModel.questions.value?.get(position)
         uiTvQuestion.text = "${position+1}. " + question?.text
+        
         answerKeyAdapter = AnswerKeyAdapter(
             optionList = question?.options?.toMutableList() ?: mutableListOf(),
             onAnswerKeySelected = { optionId ->
@@ -180,7 +181,6 @@ class QuizActivity : AppCompatActivity() {
                 answerKeyBottomSheet.dismiss()
             }
         )
-
         uiIvCloseButton.setOnClickListener {
             answerKeyBottomSheet.dismiss()
         }
@@ -203,7 +203,6 @@ class QuizActivity : AppCompatActivity() {
         uiTvGetImageFromGallery.setOnClickListener {
             questionPosition = position
             galleryResultContracts.launch("image/*")
-            //setImageUri?.let { surpriseQuizViewModel.setImage(position, image= it) }
             addImageBottomSheet.dismiss()
         }
 
@@ -228,7 +227,6 @@ class QuizActivity : AppCompatActivity() {
             createNewFile()
             deleteOnExit()
         }
-
         return FileProvider.getUriForFile(applicationContext, "${BuildConfig.APPLICATION_ID}.provider", tmpFile)
     }
 

@@ -7,10 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.suprisequizapplication.model.Options
 import com.example.suprisequizapplication.model.Question
-import okhttp3.internal.notify
 
-class SurpriseQuizViewModel(
-) : ViewModel() {
+class SurpriseQuizViewModel : ViewModel() {
 
     private var questionList: ArrayList<Question> = arrayListOf()
 
@@ -49,7 +47,7 @@ class SurpriseQuizViewModel(
     fun copyQuizCard(position: Int, question: Question) {
             val optionArrayList = question.options?.mapIndexed { index, option ->
                 Options(
-                    id = "${index}" + System.currentTimeMillis().toString(),
+                    id = "$index" + System.currentTimeMillis().toString(),
                     optionText = option.optionText,
                     setAnswer = false,
                 )
@@ -64,18 +62,10 @@ class SurpriseQuizViewModel(
             questionsLD.value = questionList
     }
 
-    fun onOptionTextEntered(questionPosition: Int, optionPosition: Int, optionText: String) {
-        Log.d("optionText", "onOptionTextEntered: ${optionText}")
-        val question = questionList[questionPosition]
-        val option = question.options?.get(optionPosition)
-        option?.optionText = optionText
-
-    }
-
     fun onQuestionTextEntered(questionPosition: Int, questionText: String) {
         val question = questionList[questionPosition]
         question.text = questionText
-        Log.d("questionText", "onQuestionTextEntered: ${questionText}")
+        Log.d("questionText", "onQuestionTextEntered: $questionText")
     }
 
     fun onOptionAdded(questionPosition: Int) {
@@ -94,11 +84,19 @@ class SurpriseQuizViewModel(
         //questionsLD.value = questionList
     }
 
+    fun onOptionTextEntered(questionPosition: Int, optionPosition: Int, optionText: String) {
+        Log.d("optionText", "onOptionTextEntered: $optionText")
+        val question = questionList[questionPosition]
+        val option = question.options?.get(optionPosition)
+        option?.optionText = optionText
+
+    }
+
     fun onOptionDeleted(questionPosition: Int, optionPosition: Int) {
-        Log.d("questionPosition", "onOptionDeleted: ${questionPosition} : ${optionPosition}")
+        Log.d("questionPosition", "onOptionDeleted: $questionPosition : $optionPosition")
         val question = questionList[questionPosition].options?.removeAt(optionPosition)
-        Log.d("questionPosition", "afterRemoval: ${question}")
-        Log.d("questionPosition", "questionList: ${questionList}")
+        Log.d("questionPosition", "afterRemoval: $question")
+        Log.d("questionPosition", "questionList: $questionList")
         questionsLD.value = questionList
     }
 
