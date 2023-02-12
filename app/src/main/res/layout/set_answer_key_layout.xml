@@ -10,7 +10,7 @@
         android:id="@+id/uiTvTabTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Select the Answer"
+        android:text="@string/select_the_answer"
         android:textStyle="bold"
         android:textSize="16sp"
         android:textColor="@color/black"
@@ -41,7 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:textSize="14sp"
+        android:textSize="16sp"
         android:textColor="@color/black"
         app:layout_constraintTop_toBottomOf="@id/uiView"/>
 
