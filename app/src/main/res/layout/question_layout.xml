@@ -13,7 +13,7 @@
     <View
         android:layout_width="5dp"
         android:layout_height="match_parent"
-        android:background="@color/cerulean_blue"/>
+        android:background="@color/bright_blue"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_margin="10dp"
@@ -25,7 +25,7 @@
             android:background="@color/grey"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter Question"
+            android:hint="@string/enter_question"
             android:layout_margin="5dp"
             android:padding="10dp"
             android:textSize="14sp"
@@ -33,15 +33,38 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
+        <ImageView
+            android:id="@+id/uiIvSetQuestionImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_set_image"
+            android:layout_marginEnd="5dp"
+            app:layout_constraintTop_toTopOf="@id/uiEtQuestion"
+            app:layout_constraintBottom_toBottomOf="@id/uiEtQuestion"
+            app:layout_constraintEnd_toEndOf="@id/uiEtQuestion"
+            />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/uiIvDisplayQuestionImage"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            app:layout_constraintTop_toBottomOf="@id/uiEtQuestion"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/uiRvOptions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:padding="5dp"
+            android:nestedScrollingEnabled="false"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/option_layout"
-            app:layout_constraintTop_toBottomOf="@id/uiEtQuestion"
+            app:layout_constraintTop_toBottomOf="@id/uiIvDisplayQuestionImage"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -77,8 +100,8 @@
             android:layout_margin="10dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:textColor="@color/dell_blue"
-            android:text="Set Answer Key"
+            android:textColor="@color/bright_blue"
+            android:text="@string/set_answer_key"
             app:layout_constraintTop_toBottomOf="@id/uiView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>

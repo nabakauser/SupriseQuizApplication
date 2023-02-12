@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.net.toUri
 import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.RecyclerView
@@ -26,6 +27,7 @@ class QuestionAdapter(
     private val onOptionAddButtonClicked: (Int) -> Unit,
     private val onAnswerKeySelected: (Int, Int) -> Unit,
     private val onSetAnswerKeyClicked: (Int) -> Unit,
+    private val onImageQuestionClicked: (Int) -> Unit
 
 ) : RecyclerView.Adapter<QuestionAdapter.QuestionViewHolder>() {
 
@@ -33,7 +35,10 @@ class QuestionAdapter(
         parent: ViewGroup, viewType: Int
     ): QuestionViewHolder {
         val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.question_layout, parent, false)
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.question_layout,
+                    parent,
+                    false)
         return QuestionViewHolder(view)
     }
 
@@ -42,11 +47,7 @@ class QuestionAdapter(
         val questionPositionIndex = position + 1
         holder.uiEtQuestion.hint = "Question $questionPositionIndex"
         Log.d("QuestionAdapter", "onBindViewHolder: ${questionList}")
-        holder.uiEtQuestion.setText(question.text)
-        val editTextValue = question.text
-        val bundle = Bundle()
-        bundle.putString("edit_text_value", editTextValue)
-        holder.uiRvOptions.itemAnimator
+
         if (question.options?.isNotEmpty() == true) {
             holder.uiRvOptions.apply {
                 adapter = OptionsAdapter(
@@ -62,7 +63,7 @@ class QuestionAdapter(
                     onAnswerKeySelected = {radioBtnPosition ->
                         onAnswerKeySelected(position,radioBtnPosition)
                         notifyItemChanged(position)
-                        //notifyDataSetChanged()
+                        //notifyDataSetChanged() -> crash
                     }
                 )
             }
@@ -70,8 +71,14 @@ class QuestionAdapter(
         holder.uiEtQuestion.addTextChangedListener { questionText ->
             question.text = questionText.toString()
             onQuestionTextEntered(position, questionText.toString())
-            //notifyDataSetChanged()
+            //notifyDataSetChanged() -> crash
         }
+        if(question.image?.isEmpty() == true) {
+            holder.uiIvDisplayImageQuestion.visibility = View.GONE
+        } else {
+            holder.uiIvDisplayImageQuestion.setImageURI(question.image?.toUri())
+        }
+        //notifyDataSetChanged() -> crash
 
     }
 
@@ -95,6 +102,8 @@ class QuestionAdapter(
         private val uiIvCopyQuestion: ImageView = itemView.findViewById(R.id.uiIvCopyQuestion)
         private val uiIvDeleteQuestion: ImageView = itemView.findViewById(R.id.uiIvDeleteQuestion)
         private val uiTvSetAnswerKey: TextView = itemView.findViewById(R.id.uiTvSetAnswerKey)
+        private val uiIvSetImageQuestion: ImageView = itemView.findViewById(R.id.uiIvSetQuestionImage)
+        val uiIvDisplayImageQuestion: ImageView = itemView.findViewById(R.id.uiIvDisplayQuestionImage)
 
         init {
             uiIvAddQuestion.setOnClickListener {
@@ -115,6 +124,10 @@ class QuestionAdapter(
             }
             uiTvSetAnswerKey.setOnClickListener {
                 onSetAnswerKeyClicked(adapterPosition)
+                notifyDataSetChanged()
+            }
+            uiIvSetImageQuestion.setOnClickListener {
+                onImageQuestionClicked(adapterPosition)
                 notifyDataSetChanged()
             }
         }

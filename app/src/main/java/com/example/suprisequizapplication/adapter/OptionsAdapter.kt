@@ -23,7 +23,10 @@ class OptionsAdapter(
         viewType: Int
     ): OptionsViewHolder {
         val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.option_layout, parent, false)
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.option_layout,
+                    parent,
+                    false)
         return OptionsViewHolder(view)
     }
 
@@ -32,10 +35,11 @@ class OptionsAdapter(
         holder.uiEtOption.hint = "Option ${position+1} "
         holder.uiEtOption.setText(option.optionText)
         holder.uiRbOptions.isChecked = option.setAnswer == true
+
         holder.uiEtOption.doAfterTextChanged { optionText ->
             option.optionText = optionText.toString()
             onOptionTextEntered(position, optionText.toString())
-            //notifyDataSetChanged()
+            //notifyDataSetChanged() -> crash
         }
     }
 
