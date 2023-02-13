@@ -22,6 +22,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
 
 class QuizActivity : AppCompatActivity() {
+
+    ///sdlhsdivhsdl
     private var binding: ActivitySurpriseQuizBinding? = null
     private val surpriseQuizViewModel: SurpriseQuizViewModel by viewModel()
     private var quizAdapter: QuestionAdapter? = null
